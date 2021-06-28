@@ -2,6 +2,6 @@
 
 import { NativeModules } from 'react-native';
 
-const { ReactNativeRongta2 } = NativeModules;
+const { RNRongta } = NativeModules;
 
-export default ReactNativeRongta2;
+export default RNRongta;

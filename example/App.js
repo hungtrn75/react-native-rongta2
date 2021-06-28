@@ -15,6 +15,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import ChoiceModal from './ChoiceModal';
+import RNRongta from 'react-native-rongta2';
 
 class App extends Component {
   constructor(props) {
@@ -26,9 +27,10 @@ class App extends Component {
       isConnect: false,
     };
   }
+
   _startScan = async () => {
     this.setState({isLoading: true});
-    await NativeModules.RNRongta.getDevicesList((error, listDevice) => {
+    RNRongta.getDevicesList((error, listDevice) => {
       this.setState({isLoading: false});
       if (error) {
         alert(error);
@@ -52,7 +54,7 @@ class App extends Component {
       isOpenModal: value,
     });
     // connect to device in native
-    await NativeModules.RNRongta.connectToDevice(item.id, isSuccess => {
+    RNRongta.connectToDevice(item.id, isSuccess => {
       if (isSuccess == '1') {
         alert('Connect success');
         this.setState({isConnect: true});
@@ -62,18 +64,19 @@ class App extends Component {
       }
     });
   };
+
   render() {
     if (this.state.isLoading) {
       return (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <ActivityIndicator color={'blue'} />
+          <ActivityIndicator color={'blue'}/>
         </View>
       );
     }
     if (this.state.isConnect) {
       return (
         <View style={{justifyContent: 'center', flex: 1, alignItems: 'center'}}>
-          <Button title="Print!" color="#841584" onPress={this._startPrint} />
+          <Button title="Print!" color="#841584" onPress={this._startPrint}/>
         </View>
       );
     }
@@ -118,7 +121,7 @@ class App extends Component {
 //   };
 
 //   const startScan = async () => {
-//     await NativeModules.RNRongta.getDevicesList((error, listDevice) => {
+//     RNRongta.getDevicesList((error, listDevice) => {
 //       if (error) {
 //         alert(error)
 //       } else {
@@ -146,8 +149,8 @@ class App extends Component {
 //     //   alert(response);
 //     // });
 
-//     //await NativeModules.RNRongta.startScan();
-//     await NativeModules.RNRongta.getDevicesList(error => alert(error), res => alert(res));
+//     //RNRongta.startScan();
+//     RNRongta.getDevicesList(error => alert(error), res => alert(res));
 //     //devices.map(device => alert(device));
 //     //console.log(devices);
 //   };
